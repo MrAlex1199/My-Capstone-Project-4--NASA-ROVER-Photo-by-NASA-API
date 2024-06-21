@@ -1,0 +1,37 @@
+<%- include("partials/header.ejs") %>
+<%- include("partials/navbar.ejs") %>
+
+<body>
+  <div class="BoxPage1">
+    <div class="Home">
+      <h1>ROVER SEARCH</h1>
+    </div>
+    <div class="SearchBox">
+      <div class="photo-box1">
+        <div>
+          <h2 class="h2ROVER-name">SEARCH ROVER PHOTOS</h2>
+        </div>
+        <div class="ROVER-Info-select">
+          <form action="/SEARCH" id="form" class="" method="POST">
+            <select name="NasaRovername" class="form-select">
+              <option value="" data-display="Select">Select Rover</option>
+              <option value="perseverance">Perseverance</option>
+              <option value="curiosity">Curiosity</option>
+              <option value="opportunity">Opportunity</option>
+              <option value="spirit">Spirit</option>
+            </select>
+              <input type="date" id="DDay" class="form-select" name="RoverDay">
+              <button type="submit" class="form-submit">GO</button>
+              <% if ( locals.Message ) { %>
+                <div style="background-color: red; border-radius: 10px; padding: 5px;">
+                <p>No photos found for the selected camera</p>
+              </div>
+              <% } %>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<%- include("partials/footer.ejs") %>

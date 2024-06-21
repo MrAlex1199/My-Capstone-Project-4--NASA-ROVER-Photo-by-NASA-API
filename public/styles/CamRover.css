@@ -1,0 +1,55 @@
+body { 
+    font-family: 'Inter', sans-serif;
+    background-image: url('../styles/images/Mars.jpg');
+    background-size: cover;
+    color: #FFF;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 10%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+nav ul {
+    list-style: none; /* Remove bullet markers */
+}
+  
+nav a {
+    font-weight: 500;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+}
+    
+nav a:hover {
+    color: #fda600;
+}
+
+.CamRover {
+    display: flex;
+    justify-content: center;
+}
+
+.CamRover table {
+    border-collapse: separate;
+}
+
+.CamRover th, .CamRover td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: rgba(2, 2, 2, 0.5);
+}
+
+.CamRover th {
+    background-color: rgba(2, 2, 2, 0.5);
+    font-weight: bold;
+}
+
+.CamRover .markerBox {
+    text-align: center;
+}

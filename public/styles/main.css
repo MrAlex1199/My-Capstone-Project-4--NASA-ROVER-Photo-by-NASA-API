@@ -1,0 +1,109 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-image: url('../styles/images/Mars.jpg');
+  background-size: cover;
+  color: #FFF;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 10%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+nav ul {
+  list-style: none;
+}
+
+nav a {
+  font-weight: 500;
+  font-size: 16px;
+  color: #edf0f1;
+  text-decoration: none;
+  margin-left: 20px;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #fda600;
+}
+
+.BoxPage1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.Home {
+  margin-top: 10%;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3em;
+  font-weight: 300;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.photo-box1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.SearchBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+select, input[type="date"], button {
+  margin: 10px;
+  padding: 5px;
+  width: 300px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.form-submit {
+  background-color: #0088a9;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.form-submit:hover {
+  background-color: #00546c;
+}
+
+#footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #4b4b4b;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

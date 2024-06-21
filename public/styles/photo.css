@@ -1,0 +1,108 @@
+:root {
+  --transform-origins: 
+    top left, top right, bottom left, bottom right, 
+    top left, top right, bottom left, bottom right, 
+    top left, top right, bottom left, bottom right, 
+    top left, top right, bottom left, bottom right, 
+    top left, top right, bottom left, bottom right, 
+    top left, top right, bottom left, bottom right, 
+    top left, top right;
+}
+
+body { 
+  font-family: 'Inter', sans-serif;
+  background-image: url('../styles/images/Mars.jpg');
+  background-size: cover;
+  color: #FFF;
+}
+
+div#quad { 
+  background-color: #000; 
+  font-size: 0; 
+  width: 60%; 
+  margin: 0 auto;
+  box-shadow: 0 0 12px rgba(0,0,0,0.8);
+}
+
+div#quad figure { 
+  margin: 0; 
+  width: 50%; 
+  height: auto; 
+  transition: 1s; 
+  display: inline-block; 
+  position: relative; 
+  overflow: hidden; 
+}
+
+div#quad figure:hover { 
+  cursor: pointer; 
+  z-index: 4; 
+}
+
+div#quad figure img { 
+  width: 100%; 
+  height: auto; 
+}
+
+div#quad figure:nth-child(n) { 
+  transform-origin: var(--transform-origin, top left); 
+}
+
+div#quad figure:nth-child(odd) { 
+  transform-origin: top left; 
+}
+
+div#quad figure:nth-child(even) { 
+  transform-origin: bottom right; 
+}
+
+div#quad figure figcaption { 
+  margin: 0; 
+  opacity: 0; 
+  background: rgba(0,0,0,0.3); 
+  color: #fff; 
+  padding: .3rem; 
+  font-size: 1.2rem; 
+  position: absolute; 
+  bottom: 0; 
+  width: 100%;
+  transition: 1s 1s opacity; 
+}
+
+.expanded { 
+  transform: scale(2); 
+  z-index: 5; 
+}
+
+div#quad figure.expanded figcaption { 
+  opacity: 1; 
+}
+
+div.full figure:not(.expanded) { 
+  pointer-events: none; 
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 10%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+nav ul {
+  list-style: none;
+}
+
+nav a {
+  font-weight: 500;
+  font-size: 16px;
+  color: #edf0f1;
+  text-decoration: none;
+  margin-left: 20px;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #fda600;
+}

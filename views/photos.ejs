@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ROVER SEARCH</title>
+    <link rel="stylesheet" href="/styles/photo.css">
+</head>
+
+<%- include("partials/navbar.ejs") %>
+
+<body>
+  <div id="quad">
+    <% APIphotos.slice(0, 100).forEach(photo => { %>
+      <figure>
+        <img src="<%= photo.img_src %>" alt="<%= photo.camera.full_name %>">
+        <figcaption><%= photo.camera.full_name %></figcaption>
+      </figure>
+    <% }) %>
+  </div>
+</body>
+
+<script>
+  var quadimages = document.querySelectorAll("#quad figure");
+  for(i=0; i<quadimages.length; i++) {
+  quadimages[i].addEventListener('click', function(){ this.classList.toggle("expanded"); quad.classList.toggle("full") }); 
+  }
+</script>
