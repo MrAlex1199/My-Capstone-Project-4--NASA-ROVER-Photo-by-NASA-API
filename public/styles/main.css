@@ -10,9 +10,10 @@ body {
   background-image: url('../styles/images/Mars.jpg');
   background-size: cover;
   color: #FFF;
+  height: 100vh;
 }
 
-header {
+nav {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -41,7 +42,9 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 20px;
+  height: 95vh;
 }
 
 .Home {
@@ -50,9 +53,13 @@ nav a:hover {
 
 h1 {
   text-align: center;
-  font-size: 3em;
+  font-size: 6em;
   font-weight: 300;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+h2 {
+  font-size: 3em;
 }
 
 .photo-box1 {
@@ -80,10 +87,10 @@ form {
 select, input[type="date"], button {
   margin: 10px;
   padding: 5px;
-  width: 300px;
+  width: 600px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 16px;
+  font-size: 40px;
 }
 
 .form-submit {
@@ -97,7 +104,7 @@ select, input[type="date"], button {
   background-color: #00546c;
 }
 
-#footer {
+footer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -106,4 +113,23 @@ select, input[type="date"], button {
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+@media only screen and (min-width: 1000px) {
+  .BoxPage1 {
+  justify-content: flex-start;
+  }
+
+  h1 {
+    font-size: 3em;
+  }
+
+  h2 {
+    font-size: 1em;
+  }
+
+  select, input[type="date"], button {
+    width: 300px;
+    font-size: 16px;
+  }
 }
