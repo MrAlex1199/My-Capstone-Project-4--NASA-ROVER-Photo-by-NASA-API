@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import 'dotenv/config';
 
 const app = express();
-const port = 3000 || process.env.PORT;
+const port = 4000 || process.env.PORT;
 const APIKEY = process.env.APIKEY;
 
 app.use(express.static("public"));
