@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: nasa-cosmic-apod
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: APIKEY
+        sync: false
