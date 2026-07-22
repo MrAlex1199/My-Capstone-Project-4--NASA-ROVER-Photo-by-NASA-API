@@ -1,3 +1,34 @@
-<footer id="footer">
-    <p>copyright© all rights reserved <%= (new Date().getFullYear())%> </p>
+<footer class="footer glass-panel-top">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <span class="footer-logo-text">NASA COSMIC APOD</span>
+            <p class="footer-subtext">Astronomy Picture of the Day • Powered by Official NASA Open API</p>
+        </div>
+        <div class="footer-status">
+            <span class="status-indicator online"></span>
+            <span class="status-text">NASA APOD Service: Operational</span>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; <%= (new Date().getFullYear()) %> NASA & Michigan Technological University. All rights reserved.</p>
+        </div>
+    </div>
 </footer>
+
+<script>
+    // Mobile navigation toggle
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (toggleBtn && navMenu) {
+            toggleBtn.addEventListener('click', () => {
+                const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+                toggleBtn.setAttribute('aria-expanded', !isExpanded);
+                navMenu.classList.toggle('active');
+                toggleBtn.classList.toggle('active');
+            });
+        }
+    });
+</script>
+</body>
+</html>

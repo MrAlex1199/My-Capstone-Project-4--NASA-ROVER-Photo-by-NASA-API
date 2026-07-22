@@ -1,53 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ROVER SEARCH</title>
-    <link rel="icon" href= "/styles/images/Mars.png" type="image/x-icon"> 
-    <link rel="stylesheet" href="/styles/CamRover.css">
-</head>
-
+<%- include("partials/header.ejs") %>
 <%- include("partials/navbar.ejs") %>
 
-<body>
-    <div class="CamRover">
-        <table>
-            <thead>
-                <tr>
-                    <th>Abbreviation</th>
-                    <th>Camera</th>
-                    <th class="markerBox">Perseverance</th>
-                    <th class="markerBox">Curiosity</th>
-                    <th class="markerBox">Opportunity</th>
-                    <th class="markerBox">Spirit</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>FHAZ</td><td>Front Hazard Avoidance Camera</td><td></td><td>✔</td><td>✔</td><td>✔</td></tr>
-                <tr><td>RHAZ</td><td>Rear Hazard Avoidance Camera</td><td></td><td>✔</td><td>✔</td><td>✔</td></tr>
-                <tr><td>MAST</td><td>Mast Camera</td><td></td><td>✔</td><td></td><td></td></tr>
-                <tr><td>CHEMCAM</td><td>Chemistry and Camera Complex</td><td></td><td>✔</td><td></td><td></td></tr>
-                <tr><td>MAHLI</td><td>Mars Hand Lens Imager</td><td></td><td>✔</td><td></td><td></td></tr>
-                <tr><td>MARDI</td><td>Mars Descent Imager</td><td></td><td>✔</td><td></td><td></td></tr>
-                <tr><td>NAVCAM</td><td>Navigation Camera</td><td></td><td>✔</td><td>✔</td><td>✔</td></tr>
-                <tr><td>PANCAM</td><td>Panoramic Camera</td><td></td><td></td><td>✔</td><td>✔</td></tr>
-                <tr><td>MINITES</td><td>Miniature Thermal Emission Spectrometer (Mini-TES)</td><td></td><td></td><td>✔</td><td>✔</td></tr>
-                <tr><td>NAVCAM_LEFT</td><td>Navigation Camera - Left</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>NAVCAM_RIGHT</td><td>Navigation Camera - Right</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>MCZ_RIGHT</td><td>Navigation Camera - Right</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>MCZ_LEFT</td><td>Navigation Camera - Right</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>FRONT_HAZCAM_LEFT_A</td><td>Front Hazard Avoidance Camera - Left</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>FRONT_HAZCAM_RIGHT_A</td><td>Front Hazard Avoidance Camera - Right</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>REAR_HAZCAM_LEFT</td><td>Rear Hazard Avoidance Camera - Left</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>REAR_HAZCAM_LEFT</td><td>Rear Hazard Avoidance Camera - Right</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>EDL_RDCAM</td><td>Rover Down-Look Camera</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>SKYCAM</td><td>MEDA Skycam</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>SHERLOC_WATSON</td><td>SHERLOC WATSON Camera</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>SUPERCAM_RMI</td><td>SuperCam Remote Micro Imager</td><td>✔</td><td></td><td></td><td></td></tr>
-                <tr><td>LCAM</td><td>Lander Vision System Camera</td><td>✔</td><td></td><td></td><td></td></tr>
-            </tbody>
-        </table>
+<link rel="stylesheet" href="/styles/CamRover.css">
+
+<main class="camrover-page-container">
+  <div class="camrover-header glass-panel">
+    <h1>HISTORIC APOD <span class="text-gradient">ARCHIVES</span></h1>
+    <p>Curated archive of milestone astronomy pictures of the day from NASA telescopes and observatories.</p>
+    
+    <div class="search-filter-box">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="camSearchInput" placeholder="Search archive title, observatory, or year..." onkeyup="filterCameraTable()" class="form-control">
     </div>
-</body>
+  </div>
 
+  <div class="table-card glass-panel">
+    <table class="cam-table" id="camTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Astronomy Discovery Title</th>
+          <th>Observatory / Telescope</th>
+          <th class="marker-col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="abbr-cell">2025-04-21</td><td>Galaxy Lenses Galaxy from Webb</td><td>James Webb Space Telescope (JWST)</td><td class="check-cell"><a href="/search?mode=random" class="btn-secondary" style="padding: 4px 10px; font-size: 0.8rem;">View</a></td></tr>
+        <tr><td class="abbr-cell">2024-02-14</td><td>The Rosette Nebula in Hydrogen and Oxygen</td><td>Hubble Space Telescope (HST)</td><td class="check-cell"><a href="/search?mode=random" class="btn-secondary" style="padding: 4px 10px; font-size: 0.8rem;">View</a></td></tr>
+        <tr><td class="abbr-cell">2023-08-15</td><td>In the Heart of the Tarantula Nebula</td><td>Hubble & ESO New Tech Telescope</td><td class="check-cell"><a href="/search?mode=random" class="btn-secondary" style="padding: 4px 10px; font-size: 0.8rem;">View</a></td></tr>
+        <tr><td class="abbr-cell">2023-05-12</td><td>Pillars of Creation from James Webb</td><td>James Webb Space Telescope (JWST)</td><td class="check-cell"><a href="/search?mode=random" class="btn-secondary" style="padding: 4px 10px; font-size: 0.8rem;">View</a></td></tr>
+        <tr><td class="abbr-cell">2023-01-05</td><td>The Carina Nebula Cosmic Cliffs</td><td>James Webb Space Telescope (JWST)</td><td class="check-cell"><a href="/search?mode=random" class="btn-secondary" style="padding: 4px 10px; font-size: 0.8rem;">View</a></td></tr>
+        <tr><td class="abbr-cell">2022-11-20</td><td>Jupiter Auroras in Infrared</td><td>James Webb Space Telescope (JWST)</td><td class="check-cell"><a href="/search?mode=random" class="btn-secondary" style="padding: 4px 10px; font-size: 0.8rem;">View</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
 
+<script>
+  function filterCameraTable() {
+    const input = document.getElementById('camSearchInput');
+    const filter = input.value.toUpperCase();
+    const table = document.getElementById('camTable');
+    const tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+      const tdDate = tr[i].getElementsByTagName('td')[0];
+      const tdTitle = tr[i].getElementsByTagName('td')[1];
+      const tdObs = tr[i].getElementsByTagName('td')[2];
+      if (tdDate || tdTitle || tdObs) {
+        const txtValueDate = tdDate.textContent || tdDate.innerText;
+        const txtValueTitle = tdTitle.textContent || tdTitle.innerText;
+        const txtValueObs = tdObs.textContent || tdObs.innerText;
+        if (
+          txtValueDate.toUpperCase().indexOf(filter) > -1 ||
+          txtValueTitle.toUpperCase().indexOf(filter) > -1 ||
+          txtValueObs.toUpperCase().indexOf(filter) > -1
+        ) {
+          tr[i].style.display = '';
+        } else {
+          tr[i].style.display = 'none';
+        }
+      }
+    }
+  }
+</script>
+
+<%- include("partials/footer.ejs") %>

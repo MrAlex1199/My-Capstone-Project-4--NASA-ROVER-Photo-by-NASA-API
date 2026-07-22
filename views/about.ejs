@@ -1,37 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ROVER SEARCH</title>
-    <link rel="icon" href= "/styles/images/Mars.png" type="image/x-icon"> 
-    <link rel="stylesheet" href="/styles/about.css">
-</head>
-
+<%- include("partials/header.ejs") %>
 <%- include("partials/navbar.ejs") %>
 
-<body>
-    <div class="about-container-bigbox">
-        <div class="about-container">
-            <div>
-                <h1>About Us</h1>
-            </div>
-            <div class="about-mission">
-                <h2>Our Mission</h2>
-                <p>We want to create a searchable website for images of rovers on Mars. To learn about it and inspire everyone.</p>
-            </div>
-            <div class="about-who-we-are">
-                <h2>Who We Are</h2>
-                <p>We want to create a searchable website for images of rovers on Mars. To learn about it and inspire everyone.</p>
-                <ul>
-                    <li>History of Tate</li>
-                    <li>Our commitment to race equality</li>
-                    <li>Policies and Procedures</li>
-                </ul>
-                <div class="about-container-photo-box">
-                    <img src="/styles/images/Mars.png" alt="Mars" width="200px" height="200px">
-                    <img src="/styles/images/mars-rover1.png" alt="MarsRover" width="200px" height="200px">
-                </div>
-          </div>
-        </div>
+<link rel="stylesheet" href="/styles/about.css">
+
+<main class="about-page-container stagger-container">
+  <!-- Hero Section -->
+  <section class="about-hero glass-panel">
+    <h1>ABOUT NASA <span class="text-gradient">APOD</span></h1>
+    <p class="about-subtitle">
+      Astronomy Picture of the Day (APOD) is originated, written, coordinated, and edited since 1995 by Robert Nemiroff and Jerry Bonnell.
+    </p>
+  </section>
+
+  <!-- Mission & Vision Cards -->
+  <section class="story-grid">
+    <div class="story-card glass-card">
+      <div class="card-icon">🌌</div>
+      <h2>Cosmic Inspiration</h2>
+      <p>
+        The APOD archive contains the largest collection of annotated astronomical images on the internet. Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer.
+      </p>
     </div>
-</body>
+
+    <div class="story-card glass-card">
+      <div class="card-icon">🔭</div>
+      <h2>Scientific Excellence</h2>
+      <p>
+        Images featured on APOD come from top space observatories including NASA's James Webb Space Telescope (JWST), Hubble Space Telescope, Chandra X-Ray Observatory, and astrophotographers worldwide.
+      </p>
+    </div>
+  </section>
+
+  <!-- Telemetry Counter Stats -->
+  <section class="stats-grid">
+    <div class="stat-box glass-panel">
+      <span class="stat-number text-gradient">10,000+</span>
+      <span class="stat-label">Daily Space Pictures</span>
+    </div>
+
+    <div class="stat-box glass-panel">
+      <span class="stat-number text-gradient-mars">30+ Years</span>
+      <span class="stat-label">Continuous Archive</span>
+    </div>
+
+    <div class="stat-box glass-panel">
+      <span class="stat-number text-gradient">100% Free</span>
+      <span class="stat-label">NASA Open Data</span>
+    </div>
+  </section>
+
+  <!-- Showcase Card -->
+  <section class="showcase-card glass-panel">
+    <h2>Space Photography Observatories</h2>
+    <div class="image-gallery-row">
+      <div class="showcase-img-box glass-card">
+        <img src="/styles/images/Mars.jpg" alt="Space Observatory">
+        <span>Deep Space Observatories</span>
+      </div>
+      <div class="showcase-img-box glass-card">
+        <img src="/styles/images/mars-rover1.png" alt="Planetary Exploration">
+        <span>Planetary Exploration Imagery</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include("partials/footer.ejs") %>

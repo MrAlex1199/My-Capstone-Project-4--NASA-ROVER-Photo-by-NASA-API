@@ -1,135 +1,573 @@
-/* Reset some default styles */
+/* ==========================================================================
+   UI/UX PRO MAX DESIGN SYSTEM — NASA MARS ROVER EXPLORER
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens & CSS Variables
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color Palette */
+  --bg-dark-base: #060814;
+  --bg-dark-surface: #0b0f24;
+  --bg-glass-card: rgba(15, 23, 42, 0.65);
+  --bg-glass-card-hover: rgba(30, 41, 59, 0.8);
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glass-glow: rgba(0, 242, 254, 0.4);
+
+  /* Primary Accent Gradients */
+  --accent-cyan: #00f2fe;
+  --accent-blue: #4facfe;
+  --accent-purple: #7928ca;
+  --accent-pink: #ff0080;
+  --accent-mars: #ff4e50;
+  --accent-amber: #f9d423;
+
+  /* Typography */
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Neutral Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.75);
+  --text-muted: rgba(255, 255, 255, 0.5);
+
+  /* Elevation & Shadows */
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-glow-cyan: 0 0 25px rgba(0, 242, 254, 0.3);
+  --shadow-glow-purple: 0 0 25px rgba(121, 40, 202, 0.35);
+  --shadow-glow-mars: 0 0 25px rgba(255, 78, 80, 0.3);
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Core Layout
+   -------------------------------------------------------------------------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: 'Inter', sans-serif;
-  background-image: url('../styles/images/Mars.jpg');
-  background-size: cover;
-  color: #FFF;
-  height: 100vh;
-}
-
-nav {
+  font-family: var(--font-body);
+  background-color: var(--bg-dark-base);
+  color: var(--text-primary);
+  min-height: 100vh;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 10px 10%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
 }
 
-nav ul {
+/* --------------------------------------------------------------------------
+   3. Starfield Particle Background Animation
+   -------------------------------------------------------------------------- */
+.starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stars-sm {
+  background-image: 
+    radial-gradient(1.5px 1.5px at 20px 30px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.8), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 90px 40px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 160px 120px, #fff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 230px 190px, rgba(0,242,254,0.9), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 300px 300px, #fff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 350px 350px;
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+.stars-md {
+  background-image: 
+    radial-gradient(2px 2px at 120px 150px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 250px 80px, rgba(255,78,80,0.8), rgba(0,0,0,0)),
+    radial-gradient(2.5px 2.5px at 310px 240px, #fff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 450px 450px;
+  animation: twinkle 6s ease-in-out 1s infinite alternate;
+}
+
+.stars-lg {
+  background-image: 
+    radial-gradient(3px 3px at 50px 200px, rgba(121,40,202,0.9), rgba(0,0,0,0)),
+    radial-gradient(3.5px 3.5px at 280px 360px, #fff, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 550px 550px;
+  animation: twinkle 8s ease-in-out 2s infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.4; transform: translateY(-10px); }
+}
+
+/* --------------------------------------------------------------------------
+   4. Glassmorphism Utilities
+   -------------------------------------------------------------------------- */
+.glass-panel {
+  background: var(--bg-glass-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-panel-top {
+  background: rgba(11, 15, 36, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-glass);
+}
+
+.glass-card {
+  background: var(--bg-glass-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  transition: var(--transition-smooth);
+}
+
+.glass-card:hover {
+  background: var(--bg-glass-card-hover);
+  border-color: var(--border-glass-glow);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+/* --------------------------------------------------------------------------
+   5. Typography & Text Gradient Animations
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 40%, var(--accent-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-mars {
+  background: linear-gradient(135deg, var(--accent-mars) 0%, var(--accent-amber) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg, 
+    #fff 0%, 
+    var(--accent-cyan) 25%, 
+    var(--accent-purple) 50%, 
+    var(--accent-cyan) 75%, 
+    #fff 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+/* --------------------------------------------------------------------------
+   6. Navigation Bar
+   -------------------------------------------------------------------------- */
+.navbar-wrapper {
+  position: sticky;
+  top: 12px;
+  z-index: 100;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(0 0 8px rgba(255, 78, 80, 0.6));
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   list-style: none;
 }
 
-nav a {
-  font-weight: 500;
-  font-size: 16px;
-  color: #edf0f1;
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  color: var(--text-secondary);
   text-decoration: none;
-  margin-left: 20px;
-  transition: color 0.3s ease;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  transition: var(--transition-fast);
 }
 
-nav a:hover {
-  color: #fda600;
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+  transition: var(--transition-fast);
 }
 
-.BoxPage1 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  height: 95vh;
+.nav-link:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.Home {
-  margin-top: 10%;
+.nav-link:hover .nav-icon {
+  opacity: 1;
+  stroke: var(--accent-cyan);
 }
 
-h1 {
-  text-align: center;
-  font-size: 6em;
-  font-weight: 300;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+.nav-link.active {
+  color: var(--text-primary);
+  background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(121, 40, 202, 0.2));
+  border: 1px solid rgba(0, 242, 254, 0.3);
 }
 
-h2 {
-  font-size: 3em;
+.nav-link.active .nav-icon {
+  opacity: 1;
+  stroke: var(--accent-cyan);
 }
 
-.photo-box1 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-}
-
-.SearchBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-select, input[type="date"], button {
-  margin: 10px;
-  padding: 5px;
-  width: 600px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 40px;
-}
-
-.form-submit {
-  background-color: #0088a9;
-  color: white;
+/* Mobile Toggle */
+.nav-toggle {
+  display: none;
+  background: transparent;
   border: none;
   cursor: pointer;
+  padding: 8px;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.form-submit:hover {
-  background-color: #00546c;
+.hamburger-bar {
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: var(--transition-fast);
 }
 
-footer {
+/* --------------------------------------------------------------------------
+   7. Form Controls & Buttons
+   -------------------------------------------------------------------------- */
+.form-group {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #4b4b4b;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
   width: 100%;
 }
 
-@media only screen and (min-width: 1000px) {
-  .BoxPage1 {
-  justify-content: flex-start;
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.form-control:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.2);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.form-control option {
+  background: #0f172a;
+  color: #fff;
+  padding: 10px;
+}
+
+/* Primary Glow Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px 28px;
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+  border: none;
+  border-radius: 12px;
+  color: #040817;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.35);
+  transition: var(--transition-bounce);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 242, 254, 0.5);
+  background: linear-gradient(135deg, #26f5ff 0%, #66b5ff 100%);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   8. Alert Notifications
+   -------------------------------------------------------------------------- */
+.alert-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-top: 16px;
+  animation: slideDown 0.4s var(--transition-fast);
+}
+
+.alert-error {
+  background: rgba(255, 78, 80, 0.15);
+  border: 1px solid rgba(255, 78, 80, 0.4);
+  color: #ff999b;
+}
+
+.alert-warning {
+  background: rgba(249, 212, 35, 0.15);
+  border: 1px solid rgba(249, 212, 35, 0.4);
+  color: #ffe875;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   9. Footer
+   -------------------------------------------------------------------------- */
+.footer {
+  margin-top: auto;
+  padding: 24px 16px;
+  width: 100%;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-logo-text {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.footer-subtext {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.footer-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-indicator.online {
+  background-color: #00ff88;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+.footer-copyright {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   10. Page Animations & Entrance Effects
+   -------------------------------------------------------------------------- */
+.stagger-container > * {
+  opacity: 0;
+  animation: fadeInUp 0.6s var(--transition-smooth) forwards;
+}
+
+.stagger-container > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-container > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-container > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-container > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-container > *:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   11. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .navbar-wrapper {
+    top: 0;
+    padding: 0;
+  }
+  
+  .navbar {
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding: 16px;
   }
 
-  h1 {
-    font-size: 3em;
+  .nav-toggle {
+    display: flex;
   }
 
-  h2 {
-    font-size: 1em;
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(11, 15, 36, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 8px;
+    border-bottom: 1px solid var(--border-glass);
+    display: none;
   }
 
-  select, input[type="date"], button {
-    width: 300px;
-    font-size: 16px;
+  .nav-menu.active {
+    display: flex;
+    animation: slideDown 0.3s var(--transition-fast);
+  }
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
   }
 }

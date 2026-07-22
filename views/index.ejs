@@ -1,33 +1,329 @@
 <%- include("partials/header.ejs") %>
 <%- include("partials/navbar.ejs") %>
 
-<main class="BoxPage1">
-  <div class="Home">
-    <h1>ROVER SEARCH</h1>
-  </div>
-  <div class="SearchBox">
-    <div class="photo-box1">
-      <h2 class="h2ROVER-name">SEARCH ROVER PHOTOS</h2>
-      <div class="ROVER-Info-select">
-        <form action="/SEARCH" id="form" method="POST">
-          <select name="NasaRovername" class="form-select" required>
-            <option value="" disabled selected>Select Rover</option>
-            <option value="perseverance">Perseverance</option>
-            <option value="curiosity">Curiosity</option>
-            <option value="opportunity">Opportunity</option>
-            <option value="spirit">Spirit</option>
-          </select>
-          <input type="date" id="DDay" class="form-select" name="RoverDay" required>
-          <button type="submit" class="form-submit">SEARCH PHOTOS</button>
-          <% if ( locals.Message ) { %>
-            <div class="error-message">
-              <p>No photos found for the selected camera</p>
-            </div>
-          <% } %>
-        </form>
-      </div>
+<main class="home-container">
+  <!-- Hero Section with Today's APOD -->
+  <section class="hero-section stagger-container">
+    <div class="hero-badge">
+      <span class="pulse-dot"></span>
+      <span>NASA ASTRONOMY PICTURE OF THE DAY</span>
     </div>
-  </div>
+
+    <h1 class="hero-title text-shimmer">
+      EXPLORE THE <span class="text-gradient">COSMOS</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      Discover the universe through NASA's featured space photography, high-definition imagery, and professional scientific explanations.
+    </p>
+
+    <!-- Today's APOD Featured Card -->
+    <% if (locals.todayApod) { %>
+      <div class="today-apod-card glass-panel">
+        <div class="apod-badge-tag">FEATURED TODAY • <%= todayApod.date %></div>
+        <div class="today-apod-grid">
+          <div class="today-apod-img-box">
+            <% if (todayApod.media_type === 'video') { %>
+              <iframe src="<%= todayApod.url %>" title="<%= todayApod.title %>" class="today-apod-video" allowfullscreen></iframe>
+            <% } else { %>
+              <img src="<%= todayApod.url %>" alt="<%= todayApod.title %>" class="today-apod-img" loading="eager">
+            <% } %>
+          </div>
+          <div class="today-apod-info">
+            <h2 class="today-title text-gradient"><%= todayApod.title %></h2>
+            <p class="today-date">📅 <%= todayApod.date %> <% if (todayApod.copyright) { %> • &copy; <%= todayApod.copyright %><% } %></p>
+            <p class="today-explanation"><%= todayApod.explanation.slice(0, 260) %>...</p>
+            <div class="today-actions">
+              <a href="/search?mode=random" class="btn-primary">
+                <span>Discover 12 Cosmic Images</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              </a>
+              <% if (todayApod.hdurl) { %>
+                <a href="<%= todayApod.hdurl %>" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                  <span>View Full HD</span>
+                </a>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- Search Glass Panel -->
+    <div class="search-card glass-panel">
+      <div class="search-card-header">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <h2>Search APOD Archives by Date</h2>
+      </div>
+
+      <form action="/SEARCH" method="POST" class="search-form">
+        <div class="form-grid">
+          <!-- Select Date -->
+          <div class="form-group">
+            <label for="apodDate" class="form-label">Single Date</label>
+            <input type="date" id="apodDate" name="apodDate" class="form-control">
+          </div>
+
+          <!-- Date Range -->
+          <div class="form-group">
+            <label for="startDate" class="form-label">Or Start Date (Range)</label>
+            <input type="date" id="startDate" name="startDate" class="form-control">
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn-primary">
+            <span>Search Astronomy Picture</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <% if (locals.Message) { %>
+          <div class="alert-box alert-<%= Message.type %>">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            <p><%= Message.text %></p>
+          </div>
+        <% } %>
+      </form>
+    </div>
+
+    <!-- Quick Discovery Categories -->
+    <div class="apod-category-grid">
+      <a href="/search?mode=random" class="category-card glass-card">
+        <div class="category-icon">✨</div>
+        <h3>Random Discovery</h3>
+        <p>Explore 12 surprise space photography picks</p>
+      </a>
+
+      <a href="/photo" class="category-card glass-card">
+        <div class="category-icon">🌌</div>
+        <h3>Galaxies & Nebulae</h3>
+        <p>Deep space photos captured by Hubble & Webb</p>
+      </a>
+
+      <a href="/camrover" class="category-card glass-card">
+        <div class="category-icon">🪐</div>
+        <h3>Solar System</h3>
+        <p>Planetary views, moons, and solar phenomena</p>
+      </a>
+    </div>
+  </section>
 </main>
+
+<style>
+  .home-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(0, 242, 254, 0.1);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    letter-spacing: 0.1em;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-cyan);
+    box-shadow: 0 0 10px var(--accent-cyan);
+    animation: pulseGlow 2s infinite;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 650px;
+  }
+
+  /* Today's Featured Card */
+  .today-apod-card {
+    width: 100%;
+    padding: 24px;
+    text-align: left;
+    position: relative;
+    margin-top: 12px;
+  }
+
+  .apod-badge-tag {
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+  }
+
+  .today-apod-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 24px;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 800px) {
+    .today-apod-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .today-apod-img-box {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .today-apod-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .today-apod-img:hover {
+    transform: scale(1.04);
+  }
+
+  .today-apod-video {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .today-apod-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .today-title {
+    font-size: 1.6rem;
+    line-height: 1.2;
+  }
+
+  .today-date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .today-explanation {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .today-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .today-actions .btn-primary {
+    width: auto;
+  }
+
+  /* Search Card */
+  .search-card {
+    width: 100%;
+    max-width: 780px;
+    padding: 32px;
+    margin-top: 10px;
+    text-align: left;
+  }
+
+  .search-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-glass);
+  }
+
+  .search-icon {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent-cyan);
+  }
+
+  .search-card-header h2 {
+    font-size: 1.35rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .apod-category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    width: 100%;
+    margin-top: 24px;
+  }
+
+  .category-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text-primary);
+    text-align: center;
+  }
+
+  .category-icon {
+    font-size: 2.2rem;
+  }
+
+  .category-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .category-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+</style>
 
 <%- include("partials/footer.ejs") %>

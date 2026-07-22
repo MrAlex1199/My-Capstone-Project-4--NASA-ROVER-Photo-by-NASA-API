@@ -1,35 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ROVER SEARCH</title>
-    <link rel="icon" href= "/styles/images/Mars.png" type="image/x-icon"> 
-    <link rel="stylesheet" href="/styles/contact.css">
-</head>
-
+<%- include("partials/header.ejs") %>
 <%- include("partials/navbar.ejs") %>
 
-<body>
-  <div class="contact-container">
-    <div class="contact-container-box">
-      <div>
-        <h1 class="contact-title">Reach Out to Us</h1>
-        <p class="contact-intro">We'd love to hear from you, astronaut!</p>
+<link rel="stylesheet" href="/styles/contact.css">
+
+<main class="contact-page-container stagger-container">
+  <div class="contact-header glass-panel text-center">
+    <h1>REACH OUT TO <span class="text-gradient">COSMIC APOD</span></h1>
+    <p>Have questions about space photography, scientific explanations, or feedback? Send us a transmission.</p>
+  </div>
+
+  <div class="contact-grid">
+    <!-- Contact Form -->
+    <div class="contact-form-card glass-panel">
+      <% if (locals.submitted) { %>
+        <div class="success-message alert-box alert-error" style="background: rgba(0, 255, 136, 0.15); border-color: rgba(0, 255, 136, 0.4); color: #75ffd1;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>
+            <h3>Message Received!</h3>
+            <p>Thank you <%= name %>, your inquiry has been submitted to Cosmic APOD.</p>
+          </div>
+        </div>
+      <% } else { %>
+        <h2>Cosmic Contact Form</h2>
+        <form action="/contact" method="POST" class="contact-form">
+          <div class="form-group">
+            <label for="name" class="form-label">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Dr. Carl Sagan" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="stargazer@nasa.gov" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="subject" class="form-label">Subject</label>
+            <select name="subject" id="subject" class="form-control">
+              <option value="General APOD Inquiry">General APOD Inquiry</option>
+              <option value="Photo Credit / Copyright">Photo Credit & Copyright</option>
+              <option value="Astrophotography Submission">Astrophotography Submission</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="Write your cosmic inquiry message here..." class="form-control" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            <span>Send Cosmic Transmission</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </form>
+      <% } %>
+    </div>
+
+    <!-- HQ Info Card -->
+    <div class="hq-info-card glass-panel">
+      <h2>NASA APOD Program</h2>
+      <p class="hq-intro">Astronomy Picture of the Day is supported by NASA Goddard Space Flight Center and MTU.</p>
+
+      <div class="info-list">
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div>
+            <strong>Goddard Space Flight Center</strong>
+            <p>Greenbelt, Maryland, USA</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">🔭</div>
+          <div>
+            <strong>Michigan Tech Observatory</strong>
+            <p>Physics Department, MTU, Houghton, MI</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">✉️</div>
+          <div>
+            <strong>Contact Mail</strong>
+            <p>apod@nasa.gov</p>
+          </div>
+        </div>
       </div>
-      <div class="contact-form-container"></div>
-      <div class="contact-info-container">
-        <h2>Mars Headquarters</h2>
-        <p>Valles Marineris, Utopia Planitia</p>
-        <p>+1 (212) 555-1234 (Earth Call Forwarding)</p>
-        <p>contact@RoverOnmars.com</p>
-      </div>
-      <div class="contact-container-photo-box">
-        <img src="/styles/images/Mars.png" alt="Mars" width="200px" height="200px">
-        <img src="/styles/images/mars-rover1.png" alt="MarsRover" width="200px" height="200px">
+
+      <div class="rover-graphic-card glass-card">
+        <img src="/styles/images/Mars.png" alt="Cosmic Planet">
+        <span class="badge-status">API Connection: Active</span>
       </div>
     </div>
   </div>
-</body>
+</main>
 
 <%- include("partials/footer.ejs") %>
-

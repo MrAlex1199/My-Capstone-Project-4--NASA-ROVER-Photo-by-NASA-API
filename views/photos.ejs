@@ -1,27 +1,183 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ROVER SEARCH</title>
-    <link rel="stylesheet" href="/styles/photo.css">
-</head>
-
+<%- include("partials/header.ejs") %>
 <%- include("partials/navbar.ejs") %>
 
-<body>
-  <div id="quad">
-    <% APIphotos.slice(0, 100).forEach(photo => { %>
-      <figure>
-        <img src="<%= photo.img_src %>" alt="<%= photo.camera.full_name %>">
-        <figcaption><%= photo.camera.full_name %></figcaption>
-      </figure>
-    <% }) %>
+<link rel="stylesheet" href="/styles/photo.css">
+
+<main class="photos-page-container">
+  <!-- Header Bar -->
+  <div class="photos-header glass-panel">
+    <div class="photos-title-box">
+      <h1>COSMIC APOD <span class="text-gradient">GALLERY</span></h1>
+      <p class="photos-meta">
+        <%= locals.searchTitle || 'Explore Astronomy Picture of the Day Imagery & Discoveries' %>
+      </p>
+    </div>
+
+    <div class="header-actions">
+      <a href="/search?mode=random" class="btn-primary" style="width: auto;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        <span>Random 12</span>
+      </a>
+      <a href="/" class="btn-secondary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        <span>Search</span>
+      </a>
+    </div>
   </div>
-</body>
+
+  <% if (locals.items && items.length > 0) { %>
+    <!-- Photos Grid -->
+    <div class="photos-grid" id="photosGrid">
+      <% items.forEach((item, index) => { %>
+        <div class="photo-card glass-card" onclick="openApodModal(<%= index %>)">
+          <div class="photo-img-wrapper">
+            <% if (item.media_type === 'video') { %>
+              <div class="video-placeholder">
+                <span class="video-play-icon">▶</span>
+                <span class="video-text">Cosmic Video</span>
+              </div>
+            <% } else { %>
+              <img src="<%= item.url %>" alt="<%= item.title %>" loading="lazy" class="photo-img" />
+            <% } %>
+            <div class="photo-overlay">
+              <span class="zoom-icon">🔍 Read Story & View HD</span>
+            </div>
+          </div>
+          <div class="photo-card-info">
+            <div class="cam-badge"><%= item.date %></div>
+            <div class="photo-card-meta">
+              <span class="meta-title"><%= item.title %></span>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <!-- Empty State -->
+    <div class="empty-state glass-panel">
+      <div class="empty-icon">✨</div>
+      <h2>No Astronomy Discoveries Found</h2>
+      <p>Try searching for a different date or discover 12 random cosmic images from NASA APOD.</p>
+      <a href="/search?mode=random" class="btn-primary" style="max-width: 250px; margin-top: 16px;">
+        <span>Discover Random APODs</span>
+      </a>
+    </div>
+  <% } %>
+</main>
+
+<!-- Fullscreen Lightbox Modal -->
+<div class="lightbox-modal" id="lightboxModal" aria-hidden="true">
+  <div class="lightbox-backdrop" onclick="closeApodModal()"></div>
+  <div class="lightbox-content glass-panel">
+    <button class="lightbox-close" onclick="closeApodModal()" aria-label="Close modal">&times;</button>
+    <div class="lightbox-body">
+      <div class="lightbox-media-container" id="lightboxMediaContainer">
+        <img id="lightboxImg" src="" alt="APOD Space Image" class="lightbox-img">
+      </div>
+      <div class="lightbox-details">
+        <h3 id="lightboxTitle">Astronomy Picture Title</h3>
+        <p id="lightboxDate" class="lightbox-date-text">📅 Date: YYYY-MM-DD</p>
+        <p id="lightboxExplanation" class="lightbox-explanation-text">Scientific explanation...</p>
+        <div class="lightbox-actions-row">
+          <a id="lightboxHdLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary" style="width: auto;">
+            <span>Download HD Photo</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-  var quadimages = document.querySelectorAll("#quad figure");
-  for(i=0; i<quadimages.length; i++) {
-  quadimages[i].addEventListener('click', function(){ this.classList.toggle("expanded"); quad.classList.toggle("full") }); 
+  const apodItems = <%- JSON.stringify(locals.items || []) %>;
+
+  function openApodModal(index) {
+    const item = apodItems[index];
+    if (!item) return;
+
+    const mediaContainer = document.getElementById('lightboxMediaContainer');
+    if (item.media_type === 'video') {
+      mediaContainer.innerHTML = `<iframe src="${item.url}" title="${item.title}" class="lightbox-img" style="min-height: 400px;" allowfullscreen></iframe>`;
+    } else {
+      mediaContainer.innerHTML = `<img id="lightboxImg" src="${item.url}" alt="${item.title}" class="lightbox-img">`;
+    }
+
+    document.getElementById('lightboxTitle').innerText = item.title;
+    document.getElementById('lightboxDate').innerText = `📅 Date: ${item.date} ${item.copyright ? `• © ${item.copyright}` : ''}`;
+    document.getElementById('lightboxExplanation').innerText = item.explanation;
+    
+    const hdLink = document.getElementById('lightboxHdLink');
+    if (item.hdurl || item.url) {
+      hdLink.href = item.hdurl || item.url;
+      hdLink.style.display = 'inline-flex';
+    } else {
+      hdLink.style.display = 'none';
+    }
+
+    const modal = document.getElementById('lightboxModal');
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
   }
+
+  function closeApodModal() {
+    const modal = document.getElementById('lightboxModal');
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = 'auto';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeApodModal();
+  });
 </script>
+
+<style>
+  .header-actions {
+    display: flex;
+    gap: 12px;
+  }
+
+  .video-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1e1b4b, #311042);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .video-play-icon {
+    font-size: 2.5rem;
+    color: var(--accent-cyan);
+  }
+
+  .video-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+  }
+
+  .lightbox-date-text {
+    font-size: 0.9rem;
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+
+  .lightbox-explanation-text {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+
+  .lightbox-actions-row {
+    margin-top: 12px;
+  }
+</style>
+
+<%- include("partials/footer.ejs") %>

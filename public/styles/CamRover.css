@@ -1,55 +1,101 @@
-body { 
-    font-family: 'Inter', sans-serif;
-    background-image: url('../styles/images/Mars.jpg');
-    background-size: cover;
-    color: #FFF;
+/* ==========================================================================
+   ROVER CAM SUPPORT STYLESHEET
+   ========================================================================== */
+
+.camrover-page-container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 10px 10%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+.camrover-header {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-nav ul {
-    list-style: none; /* Remove bullet markers */
-}
-  
-nav a {
-    font-weight: 500;
-    font-size: 16px;
-    color: #edf0f1;
-    text-decoration: none;
-    margin-left: 20px;
-    transition: color 0.3s ease;
-}
-    
-nav a:hover {
-    color: #fda600;
+.camrover-header h1 {
+  font-size: 1.8rem;
 }
 
-.CamRover {
-    display: flex;
-    justify-content: center;
+.camrover-header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
 }
 
-.CamRover table {
-    border-collapse: separate;
+.search-filter-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 450px;
+  margin-top: 8px;
+  position: relative;
 }
 
-.CamRover th, .CamRover td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    background-color: rgba(2, 2, 2, 0.5);
+.search-filter-box svg {
+  position: absolute;
+  left: 16px;
+  stroke: var(--accent-cyan);
+  pointer-events: none;
 }
 
-.CamRover th {
-    background-color: rgba(2, 2, 2, 0.5);
-    font-weight: bold;
+.search-filter-box input {
+  padding-left: 44px;
 }
 
-.CamRover .markerBox {
-    text-align: center;
+.table-card {
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.cam-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.cam-table th, .cam-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cam-table th {
+  background: rgba(15, 23, 42, 0.9);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--accent-cyan);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: sticky;
+  top: 0;
+}
+
+.abbr-cell {
+  font-family: 'Outfit', monospace;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(121, 40, 202, 0.15);
+  border-radius: 6px;
+}
+
+.marker-col, .check-cell {
+  text-align: center;
+}
+
+.check-cell {
+  color: #00ff88;
+  font-size: 1.1rem;
+}
+
+.cam-table tbody tr {
+  transition: var(--transition-fast);
+}
+
+.cam-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
 }

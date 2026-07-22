@@ -1,0 +1,77 @@
+<%- include("partials/header.ejs") %>
+<%- include("partials/navbar.ejs") %>
+
+<main class="error-page-container stagger-container">
+  <div class="error-card glass-panel">
+    <div class="error-badge">
+      <span>TRANSMISSION ERROR <%= locals.statusCode || 404 %></span>
+    </div>
+
+    <h1 class="error-code text-gradient-mars"><%= locals.statusCode || 404 %></h1>
+    <h2 class="error-title">Signal Lost in Orbit</h2>
+    
+    <p class="error-message">
+      <%= locals.message || 'The requested telemetry signal could not be established with Mars Mission Control.' %>
+    </p>
+
+    <div class="error-actions">
+      <a href="/" class="btn-primary" style="max-width: 250px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        <span>Return to Base</span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<style>
+  .error-page-container {
+    max-width: 700px;
+    margin: 80px auto;
+    padding: 0 20px;
+  }
+
+  .error-card {
+    padding: 48px 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .error-badge {
+    padding: 4px 14px;
+    background: rgba(255, 78, 80, 0.15);
+    border: 1px solid rgba(255, 78, 80, 0.4);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-mars);
+    letter-spacing: 0.05em;
+  }
+
+  .error-code {
+    font-size: 5rem;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .error-title {
+    font-size: 1.8rem;
+  }
+
+  .error-message {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 500px;
+  }
+
+  .error-actions {
+    margin-top: 16px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
+<%- include("partials/footer.ejs") %>
